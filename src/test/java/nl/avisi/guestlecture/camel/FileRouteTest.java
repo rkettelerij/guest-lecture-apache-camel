@@ -19,9 +19,9 @@ public class FileRouteTest extends CamelTestSupport {
         });
 
         getMockEndpoint("mock:file:outbox/").expectedMessageCount(1);
-        getMockEndpoint("mock:file:outbox/").expectedBodiesReceived("Hello Wis");
+        getMockEndpoint("mock:file:outbox/").expectedBodiesReceived("Goodbye World");
 
-        template.sendBody("direct:sendfile", "Hello Vis");
+        template.sendBody("direct:sendfile", "Hello World");
 
         assertMockEndpointsSatisfied();
     }
