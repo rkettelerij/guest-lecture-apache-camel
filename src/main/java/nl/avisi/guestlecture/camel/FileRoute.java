@@ -11,7 +11,15 @@ public class FileRoute extends RouteBuilder {
             .log(LoggingLevel.INFO, "Processing file ${headers.CamelFileName}")
             .transform(body().regexReplaceAll("Hello", "Goodbye"))
             .split(body(String.class).tokenize("\n"))
+            .log(LoggingLevel.INFO, "Creating seperate file ${body}.txt")
             .setHeader("CamelFileName", simple("${body}.txt"))
-            .to("file://outbox/");
+            .choice()
+                .when(header("CamelFileName").startsWith("Mies"))
+                    .to("file://outbox-mies/")
+                .when(header("CamelFileName").startsWith("Klaas"))
+                    .to("file://outbox-klaas/")
+                .otherwise()
+                    .to("file://outbox/")
+            .end();
     }
 }
