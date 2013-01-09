@@ -11,7 +11,7 @@ public class FileRoute extends RouteBuilder {
             .log(LoggingLevel.INFO, "Processing file ${headers.CamelFileName}")
             .transform(body().regexReplaceAll("Hello", "Goodbye"))
             .split(body(String.class).tokenize("\n"))
-            .log(LoggingLevel.INFO, "Creating seperate file ${body}.txt")
+            .log(LoggingLevel.INFO, "Creating separate file ${body}.txt")
             .setHeader("CamelFileName", simple("${body}.txt"))
             .choice()
                 .when(header("CamelFileName").startsWith("Mies"))
